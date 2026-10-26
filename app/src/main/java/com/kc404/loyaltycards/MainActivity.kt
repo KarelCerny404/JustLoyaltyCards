@@ -7,10 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.kc404.loyaltycards.ui.theme.JustLoyaltyCardsTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,8 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JustLoyaltyCardsTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    Main(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +32,25 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun Main(modifier: Modifier = Modifier) {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = Screen.Main.route) {
+        composable(Screen.Main.route) { MainScreen(navController, modifier) }
+        composable(
+            Screen.Add.route
+        ) { backStackEntry ->
+            AddScreen(
+                navController,
+                modifier
+            )
+        }
+    }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     JustLoyaltyCardsTheme {
-        Greeting("Android")
+        Main()
     }
 }
