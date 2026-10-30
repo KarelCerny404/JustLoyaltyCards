@@ -60,7 +60,7 @@ fun ImageSelector(onImageSelected: (Uri) -> Unit) {
 }
 
 @Composable
-fun ImageSelectorDemo() {
+fun imageSelectorDemo(): Uri? {
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
     ImageSelector { uri -> imageUri = uri }
@@ -81,4 +81,6 @@ fun ImageSelectorDemo() {
             )
         }
     }
+
+    return imageUri
 }

@@ -1,10 +1,10 @@
 package com.kc404.loyaltycards
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
@@ -17,13 +17,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
 fun AddScreen(navController: NavController, modifier: Modifier) {
+    val context = LocalContext.current
+    var cardName by remember { mutableStateOf("") }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -38,7 +46,10 @@ fun AddScreen(navController: NavController, modifier: Modifier) {
             )
         }
         TextField(
-            state = TextFieldState("", TextRange(0)),
+            value = cardName,
+            onValueChange = { newText ->
+                cardName = newText
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
@@ -60,9 +71,21 @@ fun AddScreen(navController: NavController, modifier: Modifier) {
                 }
             }
         )
-        ImageSelectorDemo()
+        imageUri = imageSelectorDemo()
         Button(
-            onClick = { navController.popBackStack() },
+            onClick = {
+                if (imageUri != null) {
+                    if (checkDataStoreFileExistence(context)) {
+                        cardCreate(context, cardName, imageUri as Uri)
+                        navController.popBackStack()
+                    } else {
+                        createDataStoreFile(context)
+                        cardCreate(context, cardName, imageUri as Uri)
+                        navController.popBackStack()
+                    }
+
+                }
+            },
             modifier = Modifier.padding(top = 16.dp),
             colors = ButtonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
