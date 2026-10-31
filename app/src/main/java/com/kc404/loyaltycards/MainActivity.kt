@@ -38,10 +38,11 @@ fun Main(modifier: Modifier = Modifier) {
         composable(Screen.Main.route) { MainScreen(navController, modifier) }
         composable(
             Screen.Add.route
-        ) {
+        ) { backStackEntry ->
             AddScreen(
                 navController,
-                modifier
+                modifier,
+                backStackEntry.arguments?.getString("editCardName") ?: ""
             )
         }
         composable(
@@ -49,6 +50,7 @@ fun Main(modifier: Modifier = Modifier) {
         ) { backStackEntry ->
             CardScreen(
                 navController,
+                cardName = backStackEntry.arguments?.getString("cardName") ?: "",
                 imageFilename = backStackEntry.arguments?.getString("imageFilename") ?: "",
                 modifier
             )

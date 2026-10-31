@@ -27,10 +27,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun AddScreen(navController: NavController, modifier: Modifier) {
+fun AddScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    editCardName: String = ""
+) {
     val context = LocalContext.current
-    var cardName by remember { mutableStateOf("") }
+    var cardName by remember { mutableStateOf(editCardName) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
+
+    if (editCardName == "{editCardName}") {
+        cardName = ""
+    }
 
     Column(
         modifier = modifier
@@ -94,9 +102,15 @@ fun AddScreen(navController: NavController, modifier: Modifier) {
                 disabledContentColor = MaterialTheme.colorScheme.secondary
             )
         ) {
-            Text(
-                "Create card"
-            )
+            if (editCardName == "" || editCardName == "{editCardName}") {
+                Text(
+                    "Create"
+                )
+            } else {
+                Text(
+                    "Save"
+                )
+            }
         }
     }
 }

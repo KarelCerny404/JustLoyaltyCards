@@ -57,10 +57,10 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier) {
                 .align(Alignment.TopEnd)
                 .size(56.dp),
             colors = IconButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.primary,
-                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                disabledContentColor = MaterialTheme.colorScheme.secondary
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.secondary,
+                disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                disabledContentColor = MaterialTheme.colorScheme.tertiary
             ),
             shape = MaterialTheme.shapes.medium
 
@@ -82,7 +82,14 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 8.dp)
-                            .clickable { navController.navigate(Screen.Card.createRoute("${itemsList[item]}.jpg")) },
+                            .clickable {
+                                navController.navigate(
+                                    Screen.Card.createRoute(
+                                        "${itemsList[item]}.jpg",
+                                        itemsList[item]
+                                    )
+                                )
+                            },
                         shape = RoundedCornerShape(percent = 20),
                         colors = CardColors(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,

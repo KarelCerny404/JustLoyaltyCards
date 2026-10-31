@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
@@ -22,7 +24,12 @@ import androidx.navigation.NavController
 import java.io.File
 
 @Composable
-fun CardScreen(navController: NavController, imageFilename: String, modifier: Modifier = Modifier) {
+fun CardScreen(
+    navController: NavController,
+    cardName: String,
+    imageFilename: String,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     val imageFile = File(context.filesDir, "img/$imageFilename")
 
@@ -53,14 +60,35 @@ fun CardScreen(navController: NavController, imageFilename: String, modifier: Mo
             colors = IconButtonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.primary,
-                disabledContainerColor = MaterialTheme.colorScheme.secondary,
-                disabledContentColor = MaterialTheme.colorScheme.secondaryContainer
+                disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                disabledContentColor = MaterialTheme.colorScheme.tertiary
             ),
             shape = MaterialTheme.shapes.medium
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
+                modifier = Modifier.size(36.dp)
+            )
+        }
+
+        IconButton(
+            onClick = { navController.navigate(Screen.Add.createRoute(cardName)) },
+            modifier = modifier
+                .align(Alignment.TopEnd)
+                .padding(horizontal = 12.dp)
+                .size(56.dp),
+            colors = IconButtonColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.secondary,
+                disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                disabledContentColor = MaterialTheme.colorScheme.tertiary
+            ),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Edit,
+                contentDescription = "Edit",
                 modifier = Modifier.size(36.dp)
             )
         }
