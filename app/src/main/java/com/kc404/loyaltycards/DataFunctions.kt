@@ -25,15 +25,14 @@ fun checkDataStoreFileExistence(context: Context): Boolean {
     return dataStoreFile.exists()
 }
 
-fun cardCreate(context: Context, cardName: String, cardImageUri: Uri) {
+fun cardCreate(context: Context, cardName: String, cardImageUri: Uri?) {
     val filesDir = context.filesDir
     val dataStoreFile = File(filesDir, "cards.json")
-    val imageFileDest = File(filesDir, "img/$cardName.${cardImageUri.getFileExtension(context)}")
 
     val dataJsonObject = try {
         val dataJsonString = dataStoreFile.readText()
         JSONObject(dataJsonString)
-    } catch (e: Exception) {
+    } catch (_: Exception) {
         JSONObject()
     }
 
@@ -59,10 +58,14 @@ fun cardCreate(context: Context, cardName: String, cardImageUri: Uri) {
     val updatedDataJsonString = dataJsonObject.toString()
     dataStoreFile.writeText(updatedDataJsonString)
 
-    val contentResolver = context.contentResolver
-    contentResolver.openInputStream(cardImageUri)?.use { input ->
-        FileOutputStream(imageFileDest).use { output ->
-            input.copyTo(output)
+    if (cardImageUri != null) {
+        val imageFileDest =
+            File(filesDir, "img/$cardName.${cardImageUri.getFileExtension(context)}")
+        val contentResolver = context.contentResolver
+        contentResolver.openInputStream(cardImageUri)?.use { input ->
+            FileOutputStream(imageFileDest).use { output ->
+                input.copyTo(output)
+            }
         }
     }
 }
@@ -74,7 +77,7 @@ fun cardRead(context: Context): List<String> {
     val dataJsonObject = try {
         val dataJsonString = dataStoreFile.readText()
         JSONObject(dataJsonString)
-    } catch (e: Exception) {
+    } catch (_: Exception) {
         JSONObject()
     }
 
@@ -87,6 +90,65 @@ fun cardRead(context: Context): List<String> {
     return List(jsonArray.length()) { i ->
         jsonArray.getString(i)
     }
+}
+
+fun cardUpdate(
+    context: Context,
+    cardName: String,
+    newCardName: String? = null,
+    newCardImage: Uri? = null
+) {
+    if (newCardName != null && newCardImage == null) {
+        cardDelete(context, cardName)
+        cardCreate(context, newCardName, null)
+        File(context.filesDir, "img/$cardName.jpg").copyTo(
+            File(
+                context.filesDir,
+                "img/$newCardName.jpg"
+            )
+        )
+    }
+
+    if (newCardName != null && newCardImage != null) {
+        cardDelete(context, cardName)
+        cardCreate(context, newCardName, newCardImage)
+    }
+
+    if (newCardName == null && newCardImage != null) {
+        cardDelete(context, cardName)
+        cardCreate(context, cardName, newCardImage)
+    }
+}
+
+fun cardDelete(context: Context, cardName: String) {
+    val filesDir = context.filesDir
+    val dataStoreFile = File(filesDir, "cards.json")
+    val cardImage = File(filesDir, "$cardName.jpg")
+
+    val dataJsonObject = try {
+        val dataJsonString = dataStoreFile.readText()
+        JSONObject(dataJsonString)
+    } catch (_: Exception) {
+        JSONObject()
+    }
+
+    val cardsArray = if (dataJsonObject.has("cards")) {
+        dataJsonObject.getJSONArray("cards")
+    } else {
+        JSONArray()
+    }
+
+    for (i in 0 until cardsArray.length()) {
+        if (cardsArray.getString(i) == cardName) {
+            cardsArray.remove(i)
+            cardImage.delete()
+            break
+        }
+    }
+
+    dataJsonObject.put("cards", cardsArray)
+    val updatedJsonDataString = dataJsonObject.toString()
+    dataStoreFile.writeText(updatedJsonDataString)
 }
 
 private fun Uri.getFileExtension(context: Context): String {

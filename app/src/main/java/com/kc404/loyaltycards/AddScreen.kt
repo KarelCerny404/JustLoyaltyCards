@@ -2,6 +2,7 @@ package com.kc404.loyaltycards
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,9 +36,11 @@ fun AddScreen(
     val context = LocalContext.current
     var cardName by remember { mutableStateOf(editCardName) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var prefillFlag by remember { mutableStateOf(false) }
 
-    if (editCardName == "{editCardName}") {
+    if (editCardName == "{editCardName}" && prefillFlag == false) {
         cardName = ""
+        prefillFlag = true
     }
 
     Column(
@@ -80,36 +83,67 @@ fun AddScreen(
             }
         )
         imageUri = imageSelectorDemo()
-        Button(
-            onClick = {
-                if (imageUri != null) {
-                    if (checkDataStoreFileExistence(context)) {
-                        cardCreate(context, cardName, imageUri as Uri)
-                        navController.popBackStack()
-                    } else {
-                        createDataStoreFile(context)
-                        cardCreate(context, cardName, imageUri as Uri)
-                        navController.popBackStack()
-                    }
 
-                }
-            },
-            modifier = Modifier.padding(top = 16.dp),
-            colors = ButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.primary,
-                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                disabledContentColor = MaterialTheme.colorScheme.secondary
+        if (editCardName != "" && editCardName != "{editCardName}" && imageUri == null) {
+            Text(
+                "Image selected"
             )
-        ) {
-            if (editCardName == "" || editCardName == "{editCardName}") {
-                Text(
-                    "Create"
+        }
+
+        Row {
+            Button(
+                onClick = {
+                    if (imageUri != null && cardName != "" && editCardName == "{editCardName}") {
+                        if (checkDataStoreFileExistence(context)) {
+                            cardCreate(context, cardName, imageUri as Uri)
+                            navController.navigate(Screen.Main.route)
+                        } else {
+                            createDataStoreFile(context)
+                            cardCreate(context, cardName, imageUri as Uri)
+                            navController.navigate(Screen.Main.route)
+                        }
+                    } else if (cardName != "" && editCardName != "{editCardName}") {
+                        cardUpdate(context, editCardName, cardName, imageUri)
+                        navController.navigate(Screen.Main.route)
+                    }
+                },
+                modifier = Modifier.padding(top = 16.dp),
+                colors = ButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    disabledContentColor = MaterialTheme.colorScheme.tertiary
                 )
-            } else {
-                Text(
-                    "Save"
-                )
+            ) {
+                if (editCardName == "" || editCardName == "{editCardName}") {
+                    Text(
+                        "Create"
+                    )
+                } else {
+                    Text(
+                        "Save"
+                    )
+                }
+            }
+
+            if (editCardName != "" && editCardName != "{editCardName}") {
+                Button(
+                    onClick = {
+                        cardDelete(context, cardName = editCardName)
+                        navController.navigate(Screen.Main.route)
+                    },
+                    modifier = Modifier.padding(top = 16.dp, start = 8.dp),
+                    colors = ButtonColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.secondary,
+                        disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        disabledContentColor = MaterialTheme.colorScheme.tertiary
+                    )
+                ) {
+                    Text(
+                        "Delete"
+                    )
+                }
             }
         }
     }
