@@ -1,5 +1,6 @@
 package com.kc404.loyaltycards
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -80,7 +81,8 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier) {
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                            .padding(bottom = 8.dp)
+                            .clickable { navController.navigate(Screen.Card.createRoute("${itemsList[item]}.jpg")) },
                         shape = RoundedCornerShape(percent = 20),
                         colors = CardColors(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
