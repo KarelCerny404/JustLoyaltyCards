@@ -24,6 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -34,11 +36,13 @@ fun AddScreen(
     editCardName: String = ""
 ) {
     val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     var cardName by remember { mutableStateOf(editCardName) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var prefillFlag by remember { mutableStateOf(false) }
 
-    if (editCardName == "{editCardName}" && prefillFlag == false) {
+    if (editCardName == "{editCardName}" && !prefillFlag) {
         cardName = ""
         prefillFlag = true
     }
@@ -73,7 +77,10 @@ fun AddScreen(
             },
             trailingIcon = {
                 IconButton(
-                    onClick = { }
+                    onClick = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Close,

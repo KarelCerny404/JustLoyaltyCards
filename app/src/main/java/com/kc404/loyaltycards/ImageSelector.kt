@@ -53,7 +53,7 @@ fun ImageSelector(onImageSelected: (Uri) -> Unit) {
                 .padding(start = 12.dp)
         )
         Text(
-            text = "Add image",
+            text = "Add image (jpg only)",
             modifier = Modifier.align(Alignment.Center)
         )
     }

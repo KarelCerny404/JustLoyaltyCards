@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -34,7 +37,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Main(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.Main.route) {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Main.route,
+        enterTransition = { fadeIn(tween(400)) },
+        exitTransition = { fadeOut(tween(400)) },
+        popEnterTransition = { fadeIn(tween(400)) },
+        popExitTransition = { fadeOut(tween(400)) }) {
         composable(Screen.Main.route) { MainScreen(navController, modifier) }
         composable(
             Screen.Add.route
