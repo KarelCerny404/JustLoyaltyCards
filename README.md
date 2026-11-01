@@ -61,7 +61,7 @@ Here's why:
 * [![Kotlin][Kotlin-shield]][Kotlin-url]
 * [![Material Design][Material-shield]][Material-url]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>****
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
 
