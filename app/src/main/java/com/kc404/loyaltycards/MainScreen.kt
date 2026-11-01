@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
@@ -51,6 +52,25 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier) {
             .fillMaxSize()
             .padding(12.dp)
     ) {
+        IconButton(
+            onClick = { navController.navigate(Screen.Settings.route) },
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .size(56.dp),
+            colors = IconButtonColors(
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                contentColor = MaterialTheme.colorScheme.tertiary,
+                disabledContentColor = MaterialTheme.colorScheme.onSurface,
+                disabledContainerColor = MaterialTheme.colorScheme.onSurfaceVariant
+            ),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Settings,
+                contentDescription = "Settings",
+                modifier = Modifier.size(36.dp)
+            )
+        }
         IconButton(
             onClick = { navController.navigate(Screen.Add.route) },
             modifier = Modifier

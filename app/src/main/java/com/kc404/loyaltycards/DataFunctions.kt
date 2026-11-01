@@ -123,7 +123,7 @@ fun cardUpdate(
 fun cardDelete(context: Context, cardName: String) {
     val filesDir = context.filesDir
     val dataStoreFile = File(filesDir, "cards.json")
-    val cardImage = File(filesDir, "$cardName.jpg")
+    val cardImage = File(filesDir, "img/$cardName.jpg")
 
     val dataJsonObject = try {
         val dataJsonString = dataStoreFile.readText()
@@ -149,6 +149,11 @@ fun cardDelete(context: Context, cardName: String) {
     dataJsonObject.put("cards", cardsArray)
     val updatedJsonDataString = dataJsonObject.toString()
     dataStoreFile.writeText(updatedJsonDataString)
+}
+
+fun clearAllInternalData(context: Context) {
+    File(context.filesDir, "cards.json").delete()
+    File(context.filesDir, "img").deleteRecursively()
 }
 
 private fun Uri.getFileExtension(context: Context): String {

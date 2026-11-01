@@ -64,6 +64,8 @@ fun Main(modifier: Modifier = Modifier) {
                 modifier
             )
         }
+        composable(Screen.Settings.route) { SettingsScreen(navController, modifier) }
+        composable(Screen.About.route) { AboutScreen(navController, modifier) }
     }
 }
 
