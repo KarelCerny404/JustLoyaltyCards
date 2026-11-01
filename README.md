@@ -125,7 +125,7 @@ Link: [https://github.com/KarelCerny404/JustLoyaltyCards](https://github.com/Kar
 [issues-shield]: https://img.shields.io/github/issues/KarelCerny404/JustLoyaltyCards.svg?style=for-the-badge
 [issues-url]: https://github.com/KarelCerny404/JustLoyaltyCards/issues
 [license-shield]: https://img.shields.io/github/license/KarelCerny404/JustLoyaltyCards.svg?style=for-the-badge
-[license-url]: https://github.com/KarelCerny404/JustLoyaltyCards/blob/master/LICENSE.txt
+[license-url]: https://github.com/KarelCerny404/JustLoyaltyCards/blob/master/LICENSE
 [product-screenshot]: img/screenshot.png
 [Compose-shield]: https://img.shields.io/badge/Jetpack%20Compose-20232A?style=for-the-badge&logo=jetpackcompose
 [Compose-url]: https://developer.android.com/compose
