@@ -1,3 +1,5 @@
+<a id="readme-top"></a>
+
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -9,17 +11,14 @@
 <br />
 <div align="center">
     <a href="https://github.com/KarelCerny404/JustLoyaltyCards">
-        <img src="img/logo.png" alt="logo" width="80" height="80"/>
+        <img src="img/logo.png" alt="logo" width="80" height="80">
     </a>
-
     <h3 align="center">Just Loyalty Cards</h3>
-
     <p align="center">
         Just a simple app for keeping your store cards (or any images).
         <br />
         <a href="https://github.com/KarelCerny404/JustLoyaltyCards/releases/tag/v1.0.0"><strong>Download</strong></a>
     </p>
-
 </div>
 
 <!-- TABLE OF CONTENTS -->
