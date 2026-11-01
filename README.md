@@ -41,7 +41,7 @@
 
 ## About The Project
 
-[![Just Loyalty Cards Screen Shot][product-screenshot]](https://github.com/KarelCerny404/JustLoyaltyCards)
+<img src="img/screenshot.png" alt="Just Loyalty Cards Screenshot" height="800">
 
 There are many apps like this available; however, I didn't find one that really suited my needs so I
 created this one.
