@@ -41,7 +41,7 @@
 
 ## About The Project
 
-<img src="img/screenshot.png" alt="Just Loyalty Cards Screenshot" height="800">
+<img src="img/screenshot.png" alt="Just Loyalty Cards Screenshot" height="400">
 
 There are many apps like this available; however, I didn't find one that really suited my needs so I
 created this one.
