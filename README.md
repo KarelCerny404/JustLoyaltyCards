@@ -116,8 +116,8 @@ Link: [https://github.com/KarelCerny404/JustLoyaltyCards](https://github.com/Kar
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/KarelCerny404/JustLoyalCards.svg?style=for-the-badge
-[contributors-url]: https://github.com/KarelCerny404/JustLoyalCards/graphs/contributors
+[contributors-shield]: https://img.shields.io/github/contributors/KarelCerny404/JustLoyaltyCards.svg?style=for-the-badge
+[contributors-url]: https://github.com/KarelCerny404/JustLoyaltyCards/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/KarelCerny404/JustLoyaltyCards.svg?style=for-the-badge
 [forks-url]: https://github.com/KarelCerny404/JustLoyaltyCards/network/members
 [stars-shield]: https://img.shields.io/github/stars/KarelCerny404/JustLoyaltyCards.svg?style=for-the-badge
